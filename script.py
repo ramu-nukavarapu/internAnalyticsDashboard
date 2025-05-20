@@ -50,16 +50,19 @@ def display_data(data):
     # Sort all colleges by registration count (optional for visualization)
     all_df = college_data.sort_values(by="TotalRegistrations", ascending=False)
 
-    search_query_all = st.text_input("🔍 Search in All Colleges")
+    with st.container():
+        search_query_all = st.text_input("Enter college name", placeholder="e.g., NIT, IIT, SRM")
 
-    if search_query_all:
-        filtered_all_df = all_df[all_df["CollegeName"].str.contains(search_query_all.upper(), case=False, na=False)]
-    else:
-        filtered_all_df = all_df
+        if search_query_all:
+            filtered_all_df = all_df[all_df["CollegeName"].str.contains(search_query_all, case=False, na=False)]
+            st.success(f"Found {len(filtered_all_df)} matching colleges")
+        else:
+            filtered_all_df = all_df
 
-    all_df_display = filtered_all_df.reset_index(drop=True)
-    all_df_display.index = all_df_display.index + 1
-    st.dataframe(all_df_display, use_container_width=True)
+        all_df_display = filtered_all_df.reset_index(drop=True)
+        all_df_display.index = all_df_display.index + 1
+
+        st.dataframe(all_df_display, use_container_width=True)
 
     # Age Analysis
     st.header("🎂 Registrations by Age")
