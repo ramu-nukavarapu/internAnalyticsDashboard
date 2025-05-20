@@ -4,6 +4,7 @@ from script import display_data
 
 API_TOKEN = st.secrets["API_TOKEN"]
 API_URL = st.secrets["API_URL"]
+LEAD_URL = st.secrets["LEAD_URL"]
 
 HEADERS = {
     "accept": "application/json",
@@ -14,14 +15,38 @@ HEADERS = {
 st.set_page_config(page_title="Intern Registrations Dashboard", layout="wide")
 st.title("🎓 Intern Registrations Dashboard")
 
-with st.spinner("Fetching data from database..."):
-    data = fetch_data(API_URL, HEADERS)
+# Session state setup
+if "intern_type" not in st.session_state:
+    st.session_state.intern_type = None
+if "data" not in st.session_state:
+    st.session_state.data = None
 
-# ✅ Button to clear the cache and refresh data
+# Buttons for intern types
+col1, col2 = st.columns(2)
+with col1:
+    if st.button("🤖 AI Developer Intern"):
+        st.session_state.intern_type = "ai"
+        with st.spinner("Fetching AI Developer Intern data..."):
+            st.session_state.data = fetch_data(API_URL, HEADERS)
+
+with col2:
+    if st.button("🧑‍💻 Tech Lead Intern"):
+        st.session_state.intern_type = "techlead"
+        with st.spinner("Fetching Tech Lead Intern data..."):
+            st.session_state.data = fetch_data(LEAD_URL, HEADERS)
+
+# Refresh button
 if st.button("🔄 Refresh"):
-    fetch_data.clear()  # This clears the cached result
+    fetch_data.clear()
+    if st.session_state.intern_type:
+        with st.spinner("Refreshing data..."):
+            if st.session_state.intern_type == "techlead":
+                st.session_state.data = fetch_data(LEAD_URL, HEADERS)
+            else:
+                st.session_state.data = fetch_data(API_URL, HEADERS)
 
-if data:
-    display_data(data)
+# Display data if loaded
+if st.session_state.data is not None:
+    display_data(st.session_state.data)
 else:
-    st.warning("No data found from the API.")
+    st.info("Please select an intern type to load data.")
