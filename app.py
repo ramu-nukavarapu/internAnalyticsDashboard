@@ -15,6 +15,17 @@ HEADERS = {
 st.set_page_config(page_title="Intern Registrations Dashboard", layout="wide")
 st.title("🎓 Intern Registrations Dashboard")
 
+# Custom CSS to center and highlight the text
+st.markdown(
+    """
+    <div style='display: flex; justify-content: center; align-items: center; background-color: #B8CFCE; padding: 20px; border-radius: 10px;'>
+        <h2 style='color: black;'>🌟 This site is deprecated. Refer the official site here - <a href="https://soai-2025.streamlit.app/">soai-2025 intern analytics</a>! 🌟</h2>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # Session state setup
 if "intern_type" not in st.session_state:
     st.session_state.intern_type = None
@@ -26,14 +37,14 @@ col1, col2 = st.columns(2)
 with col1:
     if st.button("🤖 AI Developer Intern"):
         st.session_state.intern_type = "ai"
-        with st.spinner("Fetching AI Developer Intern data..."):
-            st.session_state.data = fetch_data(API_URL, HEADERS)
+        # with st.spinner("Fetching AI Developer Intern data..."):
+            # st.session_state.data = fetch_data(API_URL, HEADERS)
 
 with col2:
     if st.button("🧑‍💻 Tech Lead Intern"):
         st.session_state.intern_type = "techlead"
-        with st.spinner("Fetching Tech Lead Intern data..."):
-            st.session_state.data = fetch_data(LEAD_URL, HEADERS)
+        # with st.spinner("Fetching Tech Lead Intern data..."):
+            # st.session_state.data = fetch_data(LEAD_URL, HEADERS)
 
 # Refresh button
 if st.button("🔄 Refresh"):
