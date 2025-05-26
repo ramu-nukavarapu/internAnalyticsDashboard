@@ -15,11 +15,15 @@ HEADERS = {
 st.set_page_config(page_title="Intern Registrations Dashboard", layout="wide")
 st.title("🎓 Intern Registrations Dashboard")
 
-# Custom CSS to center and highlight the text
 st.markdown(
     """
-    <div style='display: flex; justify-content: center; align-items: center; background-color: #B8CFCE; padding: 20px; border-radius: 10px;'>
-        <h2 style='color: black;'>🌟 This site is deprecated. Refer the official site here - <a href="https://soai-2025.streamlit.app/">soai-2025 intern analytics</a>! 🌟</h2>
+    <div style="text-align: center; background-color: #B8CFCE; padding: 20px; border-radius: 10px;">
+        <h2 style="color: black;">
+            🌟 This site is deprecated. Refer to the official site here - 
+            <a href="https://soai-2025.streamlit.app/" target="_blank" style="color: blue; text-decoration: underline;">
+                soai-2025 intern analytics
+            </a>! 🌟
+        </h2>
     </div>
     """,
     unsafe_allow_html=True
